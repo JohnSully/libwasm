@@ -13,6 +13,7 @@ ELSE()
 	set_property(SOURCE ${ASM_SOURCES} PROPERTY LANGUAGE ASM_NASM)
 
 	file(GLOB PLAT_SOURCES layer/posix/*.cpp)
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-variable") # Hack!
 ENDIF()
 
 add_library(wasm STATIC SHARED ${GENERIC_SOURCES} ${ASM_SOURCES} ${PLAT_SOURCES})

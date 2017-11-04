@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
 					if (cblock == 0 || fNestCmd)
 					{
 						stackstrCmd.push(std::string());
-						stackoffsetBlockStart.push(numeric_cast<off_t>(ftell(pf) - (pchMax - pch)));
+						stackoffsetBlockStart.push(numeric_cast<off_t, false /*off_t varies size */>(ftell(pf) - (pchMax - pch)));
 						stackMode.push(ParseMode::Command);
 					}
 					++cblock;
@@ -330,7 +330,7 @@ int main(int argc, char *argv[])
 				case ')':
 					if (cblock == 1 || fNestCmd)
 					{
-						off_t offsetCur = numeric_cast<off_t>(ftell(pf) - (pchMax - (pch + 1)));
+						off_t offsetCur = numeric_cast<off_t, false /*off_t varies size */>(ftell(pf) - (pchMax - (pch + 1)));
 						ProcessCommand(stackstrCmd.top(), pf, stackoffsetBlockStart.top(), offsetCur);
 						stackstrCmd.pop();
 						stackoffsetBlockStart.pop();

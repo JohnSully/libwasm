@@ -72,11 +72,13 @@ extern GrowMemory
 
 global ExternCallFnASM
 ExternCallFnASM:
-	push rdi
-	push rsi
 	push rbx
 	push rbp
-	
+    push r12
+    push r13
+	push r14
+    push r15
+
 	mov rsi, [arg0 + ExecutionControlBlock.memoryBase]
 	mov rbx, [arg0 + ExecutionControlBlock.localsStack]
 	mov [arg0 + ExecutionControlBlock.stackrestore], rsp
@@ -90,10 +92,12 @@ ExternCallFnASM:
 
 	mov eax, 1
 .LDone:
+    pop r15
+    pop r14
+    pop r13
+    pop r12
 	pop rbp
 	pop rbx
-	pop rsi
-	pop rdi
 	ret
 LTrapRet:
 	xor eax, eax	; return 0 for failed execution
