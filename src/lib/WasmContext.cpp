@@ -305,7 +305,7 @@ void WasmContext::InitializeMemory()
 
 	if (fFound)
 	{
-		Verify(idxMem >= 0 && idxMem < m_vecmem_types.size(), "Invalid memory export");
+		Verify(idxMem >= 0 && idxMem < (int)m_vecmem_types.size(), "Invalid memory export");
 		m_vecmem.resize(m_vecmem_types[idxMem].initial_size * WASM_PAGE_SIZE);
 	}
 }

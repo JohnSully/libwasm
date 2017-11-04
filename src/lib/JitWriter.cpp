@@ -1476,6 +1476,7 @@ void JitWriter::CompileFn(uint32_t ifn)
 
 	FnPrologue(clocals, cparams);
 
+#ifdef PRINT_DISASSEMBLY
 	const char *szFnName = nullptr;
 	for (size_t iexport = 0; iexport < m_pctxt->m_vecexports.size(); ++iexport)
 	{
@@ -1489,7 +1490,6 @@ void JitWriter::CompileFn(uint32_t ifn)
 		}
 	}
 
-#ifdef PRINT_DISASSEMBLY
 	if (szFnName != nullptr)
 		printf("Function %s (%d):\n", szFnName, ifn);
 	else

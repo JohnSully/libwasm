@@ -67,7 +67,7 @@ BuiltinExport BuiltinMap[] = {
 
 int IBuiltinFromName(const std::string &strName)
 {
-	for (int ifn = 0; ifn < _countof(BuiltinMap); ++ifn)
+	for (size_t ifn = 0; ifn < _countof(BuiltinMap); ++ifn)
 	{
 		if (strName == BuiltinMap[ifn].szName)
 			return ifn;
@@ -82,9 +82,9 @@ extern "C" uint64_t CReentryFn(int ifn, uint64_t *pvArgs, uint8_t *pvMemBase, Ex
 }
 uint64_t JitWriter::CReentryFn(int ifn, uint64_t *pvArgs, uint8_t *pvMemBase, ExecutionControlBlock *pecb)
 {
-	Verify(ifn >= 0 && ifn < m_pctxt->m_vecimports.size());
+	Verify(ifn >= 0 && (size_t)ifn < m_pctxt->m_vecimports.size());
 	ifn = m_pctxt->m_vecimports[ifn];
-	Verify(ifn >= 0 && ifn < _countof(BuiltinMap));
+	Verify(ifn >= 0 && (size_t)ifn < _countof(BuiltinMap));
 	BuiltinMap[ifn].pfn(pvArgs, pvMemBase);
 	return 0;
 }
