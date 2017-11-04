@@ -7,11 +7,11 @@ class WasmContext
 	friend class JitWriter;
 
 public:
-	WasmContext();
-	~WasmContext();
+	EXPORT WasmContext();
+	EXPORT ~WasmContext();
 
-	ExpressionService::Variant CallFunction(const char *szName, ExpressionService::Variant *rgargs = nullptr, uint32_t cargs = 0);
-	void LoadModule(FILE *pfModule);
+	EXPORT ExpressionService::Variant CallFunction(const char *szName, ExpressionService::Variant *rgargs = nullptr, uint32_t cargs = 0);
+	EXPORT void LoadModule(FILE *pfModule);
 
 protected:
 	// File Load Helpers

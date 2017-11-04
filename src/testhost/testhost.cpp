@@ -6,7 +6,7 @@
 #include <assert.h>
 #ifdef _MSC_VER
 #include 	<process.h>
-#define NOMINMAX
+#define NOMINMAX 1
 #include <Windows.h>
 #else
 template<size_t ARRAY_SIZE>
@@ -90,21 +90,6 @@ int RunProgram(const char *szProgram, const char *szArgs)
 	return retV;
 }
 #endif
-
-// cch == 0 means no expression
-size_t CchTryParseExpression(const char *rgchExpr, size_t cchExpr, ExpressionService::Variant *pvarOut)
-{
-	size_t ichCur = 0;
-	while (ichCur < cchExpr)
-	{
-		switch (rgchExpr[ichCur])
-		{
-		case ')':
-			return 0;
-		}
-		++ichCur;
-	}
-}
 
 void ProcessInvoke(const char *rgch, size_t cch)
 {
@@ -336,7 +321,7 @@ int main(int argc, char *argv[])
 					if (cblock == 0 || fNestCmd)
 					{
 						stackstrCmd.push(std::string());
-						stackoffsetBlockStart.push(ftell(pf) - (pchMax - pch));
+						stackoffsetBlockStart.push(numeric_cast<off_t>(ftell(pf) - (pchMax - pch)));
 						stackMode.push(ParseMode::Command);
 					}
 					++cblock;
@@ -345,7 +330,7 @@ int main(int argc, char *argv[])
 				case ')':
 					if (cblock == 1 || fNestCmd)
 					{
-						off_t offsetCur = ftell(pf) - (pchMax - (pch + 1));
+						off_t offsetCur = numeric_cast<off_t>(ftell(pf) - (pchMax - (pch + 1)));
 						ProcessCommand(stackstrCmd.top(), pf, stackoffsetBlockStart.top(), offsetCur);
 						stackstrCmd.pop();
 						stackoffsetBlockStart.pop();

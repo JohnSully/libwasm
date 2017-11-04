@@ -21,7 +21,7 @@ JitWriter::JitWriter(WasmContext *pctxt, size_t cfn, size_t cglbls)
 {
 	const size_t cbExec = 0x40000000; 	// 1Gb
 #ifdef _DEBUG
-	const void *pvBase = 0xB00000000;	// In debug its nice to have a constant base, in ship we want aslr
+	const void *pvBase = (const void*)0xB00000000;	// In debug its nice to have a constant base, in ship we want aslr
 #else
 	const void *pvBase = nullptr;
 #endif
@@ -1080,9 +1080,8 @@ void JitWriter::Select()
 	SafePushCode(rgcode, _countof(rgcode));
 }
 
-void JitWriter::FnEpilogue(bool fRetVal)
+void JitWriter::FnEpilogue(bool /*fRetVal*/)
 {
-	UNREFERENCED_PARAMETER(fRetVal);
 #if 0	// now that we push rdi in the prologue we don't need this
 	if (fRetVal)
 	{

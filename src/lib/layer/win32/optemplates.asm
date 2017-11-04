@@ -3,6 +3,7 @@ f32_2p63:
 	dd 5f000000h
 f64_2p63:
 	dq 43E0000000000000h
+_DATA ENDS
 _TEXT SEGMENT
 
 ExecutionControlBlock STRUCT
@@ -54,7 +55,7 @@ GrowMemory PROTO
 ;	rbp - pointer to the execution control block
 ;	temps: rcx, rdx, r11
 
-ExternCallFnASM PROC pctl : ptr ExecutionControlBlock
+ExternCallFnASM PROC
 	push rdi
 	push rsi
 	push rbx

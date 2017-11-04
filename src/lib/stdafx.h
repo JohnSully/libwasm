@@ -14,6 +14,13 @@
 #include "sal_stubs.h"
 #endif
 
+#ifdef _MSC_VER
+#define EXPORT __declspec(dllexport)
+#else
+#define EXPORT
+#endif
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
